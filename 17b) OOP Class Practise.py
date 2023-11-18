@@ -6,26 +6,32 @@ Created on Sat Nov 18 12:30:05 2023
 """
 
 class Human:
+    # OUR ATTRIBUTES OR CHARACTERISTICS
     def __init__(self, firstname, lastname, age, phone_number, height, weight, skin_color, eye_color, hair_style, body_build, shoe_size, fathers_name, mothers_name, gender):
-        self.firstname = firstname
-        self.lastname = lastname
-        self.age = age
-        self.phone_number = phone_number
+        self.__firstname = firstname
+        self.__lastname = lastname 
+        self.__age = age
+        self.__phone_number = phone_number
         self.height = height
-        self.weight = weight
+        self.__weight = weight
         self.skin_color = skin_color
         self.eye_color = eye_color
         self.hair_style = hair_style
         self.body_build =  body_build   # Possible options ("Average Size", "Muscular", "Chubby", "Obese", "Skinny", "Petite")
-        self.shoe_size = shoe_size
-        self.fathers_name = fathers_name
-        self.mothers_name = mothers_name
-        self.friends = []
-        self.gender = gender
+        self.__shoe_size = shoe_size
+        self.__fathers_name = fathers_name
+        self.__mothers_name = mothers_name
+        self.__friends = []
+        self.__gender = gender
     
+    
+    # OUR METHODS OR ACTIONS
     def make_friends(self, name):
-        self.friends_name = name
-        self.friends.append(self.friends_name)
+        self.__friends_name = name
+        self.__friends.append(self.__friends_name)
+    
+    def who_are_your_friends(self):
+        return self.__friends
         
     # Write the METHOD to remove a friend --- ASSIGNMENT
 
@@ -85,11 +91,10 @@ Vanessa = Human(
 
 Leonard.make_friends("Vanessa")
 Leonard.make_friends("Henry")
-print(Leonard.friends)
-print(Vanessa.friends)
 
 
 
+# Leonards_friends = Leonard.who_are_your_friends()
 
 
 
