@@ -12,7 +12,7 @@ Welcome to the "Data Science Tutorial Programs" repository! This repository serv
 
 4. [Machine Learning Basics](./machine_learning_basics): Introduce yourself to fundamental machine learning concepts and algorithms.
 
-5. [Deep Learning](./deep_learning): Dive into the exciting field of deep learning with examples using TensorFlow and Keras.
+5. [Deep Learning](./Numpy): Dive into the exciting field of deep learning with examples using TensorFlow and Keras.
 
 6. [Natural Language Processing (NLP)](./natural_language_processing): Understand how to process and analyze text data, including building chatbots.
 
