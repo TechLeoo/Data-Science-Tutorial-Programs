@@ -4,7 +4,7 @@ Welcome to the "Data Science Tutorial Programs" repository! This repository serv
 
 ## Table of Contents
 
-1. [Python Fundamentals](./Python Programming): Learn the basics of Python programming, including variables, data types, control flow, and functions.
+1. [Python Fundamentals](./Python_Programming): Learn the basics of Python programming, including variables, data types, control flow, and functions.
 
 2. [Data Manipulation with Pandas](./data_manipulation_pandas): Explore the powerful Pandas library for data manipulation and analysis.
 
