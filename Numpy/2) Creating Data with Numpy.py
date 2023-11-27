@@ -6,6 +6,8 @@ Created on Wed Nov 22 19:22:00 2023
 """
 
 import numpy as np
+import pandas as pd
+
 # NUMPY DATA TYPES
 # INT:            
 # 1) np.int8
@@ -30,9 +32,9 @@ import numpy as np
 # 2) np.str_
 # 3) np.string_
 
-# EXAMPLES    
-a = np.array([129], dtype = np.int8) # -128 to 127
-b = np.array([32769], dtype = np.int16) # -32768 to 32767
+# # EXAMPLES    
+# a = np.array([129], dtype = np.int8) # -128 to 127
+# b = np.array([32769], dtype = np.int16) # -32768 to 32767
 
 
 # --------> CREATING DATA WITH NUMPY <----------
@@ -94,24 +96,57 @@ b = np.array([32769], dtype = np.int16) # -32768 to 32767
 # arange4 = np.arange(20, 100, step = 5) # arange with start, stop, and step
 
 # ......... USING NP.RANDOM ............
-random_store = np.array(["UK", "USA", "Dubai", "France", "China", "Nigeria", "Ghana", "Germany", "Japan", "Egypt", "Bangladesh", "Maldives", "Santorini"])
-probabilities = [0.147, 0.027, 0.127, 0.007, 0.006, 0.257, 0.107, 0.017, 0.007, 0.007, 0.087, 0.097, 0.107]
+# random_store = np.array(["UK", "USA", "Dubai", "France", "China", "Nigeria", "Ghana", "Germany", "Japan", "Egypt", "Bangladesh", "Maldives", "Santorini"])
+# probabilities = [0.147, 0.027, 0.127, 0.007, 0.006, 0.257, 0.107, 0.017, 0.007, 0.007, 0.087, 0.097, 0.107]
 
 
-random1 = np.random.choice(random_store, size = 3, replace = False, p = probabilities)
-random2 = np.random.random_sample()
+# random1 = np.random.choice(random_store, size = 3, replace = False, p = probabilities)
+# random2 = np.random.random_sample()
 
-np.random.shuffle(random_store)
+# np.random.shuffle(random_store)
 
-random4 = np.random.rand() # SAME AS np.random_sample()
-random5 = np.random.randint(low = 2, high = 10, size = (10,))
+# random4 = np.random.rand() # SAME AS np.random_sample()
+# random5 = np.random.randint(low = 2, high = 10, size = (10,))
 # random6 = np.random.randn() # Not to be used in it's singular form. Must be cobimed with the Z score formula
 
 np.random.seed(0)
 
 # random11 = np.random.exponential() # BASED ON YOUR USE CASE
-random12 = np.random.normal()
-# random13 = np.random.binomial()
-# random14 = np.random.uniform()
+# random12 = np.random.binomial()
+# random13 = np.random.uniform()
+
+age = np.around(np.random.normal(loc = 35, scale = 5, size = (2000,)))
+mean_age = np.around(np.mean(age))
+std_age = np.around(np.std(age))
+
+salary = np.around(np.random.normal(loc = 90000, scale = 10000, size = (2000,)))
+mean_salary = np.around(np.mean(salary))
+std_salary = np.around(np.std(salary))
+
+
+# An Outlier here is going to be any number that exceeds 3 standard deviation in the positive or negative direction from the MEAN
+AgeOneSTDfromMEANpositive = mean_age + (1 * (std_age))
+AgeOneSTDfromMEANnegative = mean_age - (1 * (std_age))
+AgeTwoSTDfromMEANpositive = mean_age + (2 * (std_age))
+AgeTwoSTDfromMEANnegative = mean_age - (2 * (std_age))
+AgeThreeSTDfromMEANpositive = mean_age + (3 * (std_age))
+AgeThreeSTDfromMEANnegative = mean_age - (3 * (std_age))
+
+SalaryOneSTDfromMEANpositive = mean_salary + (1 * (std_salary))
+SalaryOneSTDfromMEANnegative = mean_salary - (1 * (std_salary))
+SalaryTwoSTDfromMEANpositive = mean_salary + (2 * (std_salary))
+SalaryTwoSTDfromMEANnegative = mean_salary - (2 * (std_salary))
+SalaryThreeSTDfromMEANpositive = mean_salary + (3 * (std_salary))
+SalaryThreeSTDfromMEANnegative = mean_salary - (3 * (std_salary))
+
+# Creating the dataset
+data = pd.DataFrame({"Age": age, "Salary": salary})
+
+# Removing Outliers
+Removed_Outliers = data[(data["Age"] >= 20) & (data["Age"] <= 50) & (data["Salary"] >= 60081) & (data["Salary"] <= 119217.0)]
+
+## INITIATING NAN - Not A Number
+# age[0] = np.nan
+# data.iloc[0, 0] = np.nan
 
 
