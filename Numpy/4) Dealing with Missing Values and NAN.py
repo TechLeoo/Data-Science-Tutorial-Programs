@@ -18,9 +18,14 @@ vector_array[24] = np.nan # Reassigning variable vector_array[24] with value np.
 vector_array[27] = vector_array[30] = vector_array[33] = np.nan 
 
 # ----> Replace NAN with a value
-value = np.mean(vector_array)
+value = np.mean(vector_array) # Numpy doesn't do well when you have NAN and are trying to perform calculations
+# How do we fix this:
+    # ----> To fix this, turn all the NAN to ZERO
+vector_array = np.nan_to_num(vector_array, nan = 0)
+mean = np.mean(vector_array)
 
-
+# ----> Counting missing values in your dataset
+data = np.isnan(matrix_array).sum()
 
 
 
