@@ -1,0 +1,6 @@
+;Names; Age; Mood; Role
+0; Leo; 25; Happy; Instructor
+1; Edsam; 20; Neutral; Student
+2; Donald; 22; Sad; Student
+3; Dami; 25; Angry; Student
+4; Maryam; 19; Excited; 
