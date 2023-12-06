@@ -16,6 +16,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # (2) GET THE DATASET
+data = pd.read_csv("50_Startups.csv")
 dataset = pd.read_csv("50_Startups.csv")
 
 # dataset = pd.DataFrame({"R&D Spend": [12, 13, 8, 2, 9, 18, 6], "Profit": [16700, 18000, 11500, 500, 13000, 25500, 8700]})
@@ -62,6 +63,21 @@ data_heatmap = sns.heatmap(data_correlation_matrix, cmap = "coolwarm", annot = T
 # plt.ylabel("Profit")
 # plt.show() # Denotes the end of your graph and shows it
 
+# (4) DATA CLEANING:
+        # - Data transformation ---> Turning categorical to numerical data
+        # - Data scaling
+        # - Fixing missing values
+        
+# - Data Transformation
+# -------> WE CREATE DUMMIES and DATA/LABEL ENCODING
+# METHOD 1: Encoding Manually
+# encode = {"New York": 0, "California": 1, "Florida": 2}
+# dataset.replace(encode, inplace = True) # THIS METHOD FAILS BECAUSE THIS IS ONLY USEFUL WHEN YOU HAVE JUST 2 CATEGORIES
 
+# METHOD 2: Get dummies
+dataset = pd.get_dummies(dataset, columns = ["State"], dtype = int,)
+
+
+        
 
 
