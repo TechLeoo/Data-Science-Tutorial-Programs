@@ -6,11 +6,12 @@ Created on Tue Dec  5 19:46:59 2023
 """
 
 # 1) IMPORT LIBRARIES
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt # Visualization tool
 import seaborn as sns # Visualization tool
+from sklearn.preprocessing import StandardScaler
 import warnings
+
 
 # DEAL WITH WARNINGS
 warnings.filterwarnings("ignore")
@@ -64,10 +65,16 @@ data_heatmap = sns.heatmap(data_correlation_matrix, cmap = "coolwarm", annot = T
 # plt.show() # Denotes the end of your graph and shows it
 
 # (4) DATA CLEANING:
+        # - Dropping Columns
         # - Data transformation ---> Turning categorical to numerical data
         # - Data scaling
         # - Fixing missing values
+        # - Removing outliers
+
+# # - Dropping Columns
+# dataset = dataset.drop(["State"], axis = 1)
         
+
 # - Data Transformation
 # -------> WE CREATE DUMMIES and DATA/LABEL ENCODING
 # METHOD 1: Encoding Manually
@@ -75,9 +82,19 @@ data_heatmap = sns.heatmap(data_correlation_matrix, cmap = "coolwarm", annot = T
 # dataset.replace(encode, inplace = True) # THIS METHOD FAILS BECAUSE THIS IS ONLY USEFUL WHEN YOU HAVE JUST 2 CATEGORIES
 
 # METHOD 2: Get dummies
-dataset = pd.get_dummies(dataset, columns = ["State"], dtype = int,)
+dataset = pd.get_dummies(dataset, columns = ["State"], dtype = int, drop_first = True)
 
 
-        
+# - Scaling our Data
+scaler = StandardScaler()
+scaled_dataset = scaler.fit_transform(dataset)
+scaled_dataset = pd.DataFrame(scaled_dataset, columns = scaler.feature_names_in_)
 
+
+# - Removing Outliers
+removed_outliers_dataset = scaled_dataset[(scaled_dataset >= -3) & (scaled_dataset <= 3)]
+
+
+# - Fixing Missing Values
+# --------> NOT NEEDED HERE
 

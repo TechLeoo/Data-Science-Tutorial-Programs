@@ -10,13 +10,15 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt # Visualization tool
 import seaborn as sns # Visualization tool
+from sklearn.preprocessing import StandardScaler
+from sklearn.impute import SimpleImputer
 import warnings
 
 # DEAL WITH WARNINGS
 warnings.filterwarnings("ignore")
 
 # (2) GET THE DATASET
-dataset = pd.read_csv("laliga21-22.csv")
+dataset = pd.read_csv("Churn_Modelling.csv")
 
 # (3) EDA ---> Exploratory Data Analysis
 dataset.info()
@@ -33,3 +35,30 @@ data_correlation_matrix = dataset.corr() # CORRELATION FORMULAS ---> PEARSON, KE
 data_histogram = dataset.hist(figsize = (15, 10), bins = 10)
 plt.figure(figsize = (15, 10))
 data_heatmap = sns.heatmap(data_correlation_matrix, cmap = "coolwarm", annot = True)
+
+# (4) DATA CLEANING:
+# - Dropping Columns
+dataset = dataset.drop(["CustomerId", "Surname"], axis = 1)
+
+# - Data Transformation
+dataset = pd.get_dummies(dataset, dtype = int, drop_first = True)
+
+# - Scaling our Data
+scaler = StandardScaler()
+scaled_dataset = scaler.fit_transform(dataset)
+scaled_dataset = pd.DataFrame(scaled_dataset, columns = scaler.feature_names_in_)
+
+# - Removing Outliers
+removed_outliers_dataset = scaled_dataset[(scaled_dataset >= -3) & (scaled_dataset <= 3)]
+null_count = removed_outliers_dataset.isnull().sum().sum()
+
+# - Handling mssing values after removinbg outliers
+# # Method 1: Dropping the rows
+# clean_data = removed_outliers_dataset.dropna()
+
+# Method 2: Using mean, median, or mode
+imputer = SimpleImputer(strategy = "median")
+clean_data = imputer.fit_transform(removed_outliers_dataset)
+
+
+
