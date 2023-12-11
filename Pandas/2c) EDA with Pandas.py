@@ -59,6 +59,7 @@ null_count = removed_outliers_dataset.isnull().sum().sum()
 # Method 2: Using mean, median, or mode
 imputer = SimpleImputer(strategy = "median")
 clean_data = imputer.fit_transform(removed_outliers_dataset)
+clean_data = pd.DataFrame(clean_data, columns = imputer.feature_names_in_)
 
 
 
