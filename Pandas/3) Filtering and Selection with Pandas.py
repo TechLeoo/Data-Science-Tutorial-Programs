@@ -86,10 +86,14 @@ y = dataset.iloc[:, 4]
 # ---> Pandas Profiling
 report = ProfileReport(df = dataset, dark_mode = True, explorative = True, title='Pandas Profiling Report')
 report.to_widgets()
-report.to_file(output_file = "Predicting_Purchases.html")
+report.to_file(output_file = "Predicting_Purchases_Pandas_Profile.html")
 
 # ---> Sweetviz
-# report = sv.DataframeReport()
+report1 = sv.analyze(dataset)
+report1.show_html(filepath = 'Predicting_Purchases_Sweetviz.html', open_browser=True)
+
+
+
 
 
 
