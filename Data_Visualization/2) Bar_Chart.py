@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 dataset = pd.read_csv("Social_Network_Ads.csv")
-dataset1 = pd.read_excel("Financials Sample Data.xlsx")
+data_bar = pd.DataFrame({"People": ["Iyin", "Busola", "Edsam", "Ifunanya", "Donald", "Leo", "Micheal"], "No_of_assets": [3, 10, 5, 2, 1, 13, 6]})
 
 # 1) ANALYZING THE AVERAGE SALARY ACROSS MALE AND FEMALE CUSTOMERS
 data = dataset[["Gender", "EstimatedSalary"]].groupby("Gender").mean()
@@ -46,4 +46,19 @@ plt.show()
 # graph.write_html("Gender & Salary.html", auto_open = True)
 
 
-data_to_graph = dataset1[(dataset1["Account"] == "Sales") & (dataset1["Scenario"] != "Forecast")]
+
+# 2) GRAPH OF NUMBER OF ASSETS FOR EACH PERSON
+# BAR CHART
+# ---> REQUIRES at least 1 CATEGORICAL and 1 NUMERICAL
+# ---> Using Pandas
+graph = data_bar.plot(x = "People", y = "No_of_assets", kind = 'bar', figsize = (15, 10), title = "Graph of number of assets for each person with PANDAS", xlabel = "People", ylabel = "No of assets")
+plt.show()
+
+# ---> Using Matplotlib
+plt.figure(figsize = (15, 10))
+graph = plt.bar(x = data_bar["People"], height = data_bar["No_of_assets"], width = 0.5, color = "brown")
+plt.bar_label(container = graph, padding = 5)
+plt.title("Graph of number of assets for each person with MATPLOTLIB")
+plt.xlabel("People") 
+plt.ylabel("No of assets")
+plt.show()
