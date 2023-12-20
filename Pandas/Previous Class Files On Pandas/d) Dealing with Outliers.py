@@ -23,6 +23,7 @@ scaler = StandardScaler()
 data = pd.DataFrame(scaler.fit_transform(dataset), columns = ["Column1", "Column2", "Column3", "Column4", "Column5"])
 
 removed_outliers1 = data[(data < 3) & (data > -3)].dropna() # You can adjust it from 3. You can use -2.5 to 2.5
+a = scaler.inverse_transform(removed_outliers1)
 
 # # REMOVING OUTLIERS ---> METHOD 2
 # removed_outliers2 = sp.stats.zscore(dataset)
