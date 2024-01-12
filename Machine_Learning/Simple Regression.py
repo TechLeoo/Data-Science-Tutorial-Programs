@@ -56,9 +56,6 @@ automate = SupervisedLearning(dataset)
 select_independent = automate.select_dependent_and_independent(predict = "Salary")
 split_data = automate.split_data()
 model_building = automate.build_multiple_regressors(regressors = regressors, cross_validation = False)
-# 1) Data must have training and test to build models
-# 2) Check your regressor graph
-
 visualize = automate.simple_linregres_graph(regressor = regressors, title = "Predicting Salary given an individuals Experience", line_style = "solid", line_marker = None, line_color = "blue", whole_dataset = True)
 
 
