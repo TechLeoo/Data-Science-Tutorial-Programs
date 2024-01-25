@@ -1,13 +1,12 @@
 """
-Implementing a clusting algorithm using agglomerative hierachial clustering.
+Implementing a clusting algorithm using k-means clustering.
 """
 
 import warnings
-import numpy as np
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
-from scipy.cluster.hierarchy import dendrogram, linkage
-from sklearn.cluster import AgglomerativeClustering
+from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
 
 warnings.filterwarnings("ignore")
@@ -27,46 +26,29 @@ data_correlation_matrix = data.corr()
 data_null_count = data.isnull().sum()
 data_total_null_count = data.isnull().sum().sum()
 
-# # Visualize
-# # Age vs Annual Income
-# plt.figure(figsize = (15, 10))
-# plt.scatter(data["Age"], data["Annual Income (k$)"])
-# plt.xlabel("Age")
-# plt.ylabel("Annual Income")
-# plt.show()
-
-# # Age vs Spending Score
-# plt.figure(figsize = (15, 10))
-# plt.scatter(data["Age"], data["Spending Score (1-100)"])
-# plt.xlabel("Age")
-# plt.ylabel("Spending Score (1-100)")
-# plt.show()
-
-# # Annual Income vs Spending Score
-# plt.figure(figsize = (15, 10))
-# plt.scatter(data["Annual Income (k$)"], data["Spending Score (1-100)"])
-# plt.xlabel("Annual Income")
-# plt.ylabel("Spending Score (1-100)")
-# plt.show()
-
 # Select columns to evaluate clustering process
 x = data.iloc[:, [3, 4]]
 
-# # Create Dendrogram
-# links = linkage(x, "ward")
-# plt.figure(figsize = (15, 10))
-# dendrogram_graph = dendrogram(links)
-# plt.xlabel("Points")
-# plt.ylabel("Distance")
-# plt.show()
-
-
 # Model Training
-clusterer = AgglomerativeClustering(n_clusters = 5, metric = "euclidean")
-model = clusterer.fit(x)
+store_inertia = []
+store_model = {}
+clusters = [n for n in range(1, 21)] # List Comprehension
+for num in range(1, 21):
+    clusterer = KMeans(n_clusters = num, random_state = 0)
+    model = clusterer.fit(x)
+    store_model[f"Cluster_{num}"] = model
+    store_inertia.append(model.inertia_)
+    
+plt.figure(figsize = (15, 10))
+plt.plot(clusters, store_inertia, marker = "o", linestyle='dashed',)
+plt.xlabel("Number of clusters")
+plt.xticks(np.arange(0, 21, 1))
+plt.ylabel("WCSS")
+plt.title("Elbow Diagram")
+plt.show()
 
 # Model Prediction
-y_pred = model.fit_predict(x)
+y_pred = store_model["Cluster_5"].labels_
 
 # Model Evaluation
 # -----> ASSIGNMENT (Find out type range of values for the METRICS and what they mean.)
@@ -81,13 +63,19 @@ select1 = x[y_pred == 1]
 select2 = x[y_pred == 2]
 select3 = x[y_pred == 3]
 select4 = x[y_pred == 4]
+centriods = store_model["Cluster_5"].cluster_centers_
 
 plt.figure(figsize = (15, 10))
 plt.scatter(select0.iloc[:, 0], select0.iloc[:, 1], c = "red", s = 10, label = "High Income - Low Spenders")
 plt.scatter(select1.iloc[:, 0], select1.iloc[:, 1], c = "blue", s = 10, label = "Sensible Spenders")
 plt.scatter(select2.iloc[:, 0], select2.iloc[:, 1], c = "green", s = 250, label = "High Income - High Spenders")
 plt.scatter(select3.iloc[:, 0], select3.iloc[:, 1], c = "yellow", s = 250, label = "Low Income - High Spenders")
-plt.scatter(select4.iloc[:, 0], select4.iloc[:, 1], c = "black", s = 10, label = "Low Income - Low Spenders")
+plt.scatter(select4.iloc[:, 0], select4.iloc[:, 1], c = "brown", s = 10, label = "Low Income - Low Spenders")
+plt.scatter(centriods[0, 0], centriods[0, 1], c = "black", label = "Centriods")
+plt.scatter(centriods[1, 0], centriods[1, 1], c = "black", label = "Centriods")
+plt.scatter(centriods[2, 0], centriods[2, 1], c = "black", label = "Centriods", s = 250)
+plt.scatter(centriods[3, 0], centriods[3, 1], c = "black", label = "Centriods")
+plt.scatter(centriods[4, 0], centriods[4, 1], c = "black", label = "Centriods")
 plt.title("Analyzing different customer grouping in our business.")
 plt.xlabel("Annual Income")
 plt.ylabel("Spending Score")
@@ -95,11 +83,7 @@ plt.legend()
 plt.show()
 
 
-# # METHOD 2
-# plt.figure(figsize = (15, 10))
-# plt.scatter(data["Annual Income (k$)"], data["Spending Score (1-100)"], c = y_pred)
-# plt.title("Analyzing different customer grouping in our business.")
-# plt.xlabel("Annual Income")
-# plt.ylabel("Spending Score")
-# plt.show()
-
+    
+    
+    
+    
