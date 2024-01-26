@@ -32,11 +32,14 @@ x = data.iloc[:, [3, 4]]
 # Model Training
 store_inertia = []
 store_model = {}
-clusters = [n for n in range(1, 21)] # List Comprehension
+clusters = []
 for num in range(1, 21):
+    clusters.append(num)
+    
     clusterer = KMeans(n_clusters = num, random_state = 0)
     model = clusterer.fit(x)
-    store_model[f"Cluster_{num}"] = model
+    
+    store_model[f"Cluster_{num}"] = model # Optional
     store_inertia.append(model.inertia_)
     
 plt.figure(figsize = (15, 10))
@@ -73,17 +76,14 @@ plt.scatter(select3.iloc[:, 0], select3.iloc[:, 1], c = "yellow", s = 250, label
 plt.scatter(select4.iloc[:, 0], select4.iloc[:, 1], c = "brown", s = 10, label = "Low Income - Low Spenders")
 plt.scatter(centriods[0, 0], centriods[0, 1], c = "black", label = "Centriods")
 plt.scatter(centriods[1, 0], centriods[1, 1], c = "black", label = "Centriods")
-plt.scatter(centriods[2, 0], centriods[2, 1], c = "black", label = "Centriods", s = 250)
-plt.scatter(centriods[3, 0], centriods[3, 1], c = "black", label = "Centriods")
+plt.scatter(centriods[2, 0], centriods[2, 1], c = "black", label = "Centriods", s = 200)
+plt.scatter(centriods[3, 0], centriods[3, 1], c = "black", label = "Centriods", s = 200)
 plt.scatter(centriods[4, 0], centriods[4, 1], c = "black", label = "Centriods")
+plt.xticks(np.arange(-20, 200, 20))
+plt.yticks(np.arange(-20, 120, 20))
 plt.title("Analyzing different customer grouping in our business.")
 plt.xlabel("Annual Income")
 plt.ylabel("Spending Score")
 plt.legend()
 plt.show()
-
-
-    
-    
-    
-    
+ 
