@@ -31,6 +31,7 @@ drop_columns = automate.drop_columns("Position")
 # Further Data Preparation and Segregation
 select_variables = automate.select_dependent_and_independent(predict = "Salary")
 poly_x = automate.polyreg_x(degree = 10, inplace = True)
+poly_x = automate.polyreg_x(degree = 10)
 
 # Model Building 1
 regressor = LinearRegression()
@@ -39,4 +40,4 @@ training = automate.train_model_regressor(regressor)
 prediction = automate.regressor_predict()
 evaluation = automate.regressor_evaluation()
 
-poly_reg = automate.polyreg_graph(title = "Analyzing salary across different levels", whole_dataset = True, line_marker = None, line_style = "solid",)
+poly_reg = automate.polyreg_graph(title = "Analyzing salary across different levels", xlabel = "xkd", ylabel = "dkkd", whole_dataset = True, line_marker = None, line_style = "solid",)
