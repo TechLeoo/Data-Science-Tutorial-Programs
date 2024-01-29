@@ -30,7 +30,6 @@ drop_columns = automate.drop_columns("Position")
 
 # Further Data Preparation and Segregation
 select_variables = automate.select_dependent_and_independent(predict = "Salary")
-poly_x = automate.polyreg_x(degree = 10, inplace = True)
 poly_x = automate.polyreg_x(degree = 10)
 
 # Model Building 1
