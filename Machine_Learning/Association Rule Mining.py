@@ -26,5 +26,9 @@ for row in range(0, 7501):
 # TASK 2: Create an ENCODED VERSION of your data
 encoder = TransactionEncoder()
 new_data = pd.DataFrame(encoder.fit_transform(Transactions), columns = encoder.columns_)
-new_data[new_data == False] = 0
-new_data[new_data == True] = 1
+
+# EVALUATION
+support = apriori(new_data, min_support = 0.03, use_colnames = True, low_memory = True)
+confidence = association_rules(support, metric = "confidence", min_threshold = 0.01)
+lift = association_rules(support, metric = "lift", min_threshold = 1.1)
+
