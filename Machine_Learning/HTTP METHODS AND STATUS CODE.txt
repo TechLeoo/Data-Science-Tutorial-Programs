@@ -1,0 +1,21 @@
+STATUS CODES:
+
+200 - Ok		400 - Bad Request		500 - Internal Server Error
+201 - Created		401 - Unauthorized
+202 - Accepted		404 - Not Found
+204 - No Content	415 - Unsupported Media Type
+			422 - Unprocessable Entity
+			403 - Forbidden Request (Not Authorized)
+
+
+
+2xx ------> Successful Operation
+3xx ------> Redirection
+4xx ------> Client Error
+5xx ------> Server Error
+
+GET
+POST
+PUT
+PATCH
+DELETE
