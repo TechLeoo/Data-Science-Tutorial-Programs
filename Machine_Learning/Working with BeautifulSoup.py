@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import requests
 import time
@@ -113,37 +114,94 @@ from bs4 import BeautifulSoup
 
 
 # define functions
-def get_sections():
-    pass
+def scrape_info():
+    movies_info = []
+    store = []
+    all_store = []
+    store_directors = []
+    store_stars = []
+    store_votes = []
+    store_gross = []
+    for each in info:
+        if each.find("h3", class_ ="lister-item-header").find("a") != None:
+            title = each.find("h3", class_ ="lister-item-header").find("a").text
+            store.append(title)
+        else:
+            store.append(np.nan)
+        if each.find("h3", class_ ="lister-item-header").find("span", class_ ="lister-item-year text-muted unbold") != None:
+            release_year = each.find("h3", class_ ="lister-item-header").find("span", class_ ="lister-item-year text-muted unbold").text.replace("(", "").replace(")", "")
+            store.append(release_year)
+        else:
+            store.append(np.nan)
+        if each.find("span", class_ = "runtime") != None:
+            runtime = each.find("span", class_ = "runtime").text.replace("min", "").strip()
+            store.append(runtime)
+        else:
+            store.append(np.nan)
+        if each.find("span", class_ = "genre") != None:
+            genre = each.find("span", class_ = "genre").text.strip()
+            store.append(genre)
+        else:
+            store.append(np.nan)
+        if each.find("span", class_ = "certificate") != None:
+            certificate = each.find("span", class_ = "certificate").text
+            store.append(certificate)
+        else:
+            store.append(np.nan)
+        
+        movies_info.append(store)
+        store = []
+        
+        other_details = each.find_all("p", class_ = "text-muted text-small")[1:]
+        for each_other_details in other_details: 
+            if each_other_details.text != None:
+                all_ = each_other_details.text.strip().replace("Votes", "|Votes").replace("Director", "|Director").replace("\nStars ", "|Stars").split("|")
+                all_store.append(all_)
+        
+    for index, item in enumerate(all_store):
+        if index == 0 or index % 2 == 0:
+            if any(["Director" in sublist for sublist in item]):
+                director = item[1].replace("Director:", "").replace("Directors:", "").strip()
+                store_directors.append(director)
+            else:
+                store_directors.append(np.nan)
+            if any(["Stars" in sublist for sublist in item]):
+                stars = item[2].replace("Stars:", "").strip()
+                store_stars.append(stars)
+            else:
+                store_stars.append(np.nan)
+        else:
+            if any(["Votes" in sublist for sublist in item]):
+                votes = item[1].replace(",", "").replace("Votes:", "").strip()
+                store_votes.append(votes)
+            else:
+                store_votes.append(np.nan)
+            if any(["Gross" in sublist for sublist in item]):
+                gross = item[2].replace("$", "").replace("Gross:", "").replace("M", "").strip()
+                store_gross.append(gross)
+            else:
+                store_gross.append(np.nan)
 
-url = "https://www.imdb.com/list/ls006266261/?sort=list_order,asc&st_dt=&mode=detail&page=1"
-scraper = requests.get(url)
-response = scraper.text
+def get_pages(url, parser, tag, class_ = None):
+    scraper = requests.get(url)
+    response = scraper.text
 
-soup = BeautifulSoup(response, 'html.parser')
-info = soup.find_all("div", class_ ="lister-item-content")
+    soup = BeautifulSoup(response, parser)
+    info = soup.find_all(tag, class_ = class_)
+    return (soup, info)
 
-store = []
-for each in info:
-    title = each.find("h3", class_ ="lister-item-header").find("a").text
-    release_year = each.find("h3", class_ ="lister-item-header").find("span", class_ ="lister-item-year text-muted unbold").text
-    runtime = each.find("span", class_ = "runtime").text
-    genre = each.find("span", class_ = "genre").text
-    certificate = each.find("span", class_ = "certificate").text
-    directors = each.find_all("p", class_ = "text-muted text-small")[1]
-    # for each_other_details in other_details: 
-        # runtime = each_other_details.find("span", class_ = "runtime").text
-        # genre = each_other_details.find("span", class_ = "genre").text
-        # certificate = each_other_details.find("span", class_ = "certificate").text
-        # directors = other_details.a.text
-        # print(directors)
-    # print(runtime)
-    print(directors)
+
+url = f"https://www.imdb.com/list/ls006266261/?st_dt=&mode=detail&page=1&sort=list_order,asc"
+pages = int(soup.find("span", class_="pagination-range").text.replace(",", "").split()[-1])
 
 
 
 
+# scraper = requests.get(url)
+# response = scraper.text
 
+# soup = BeautifulSoup(response, 'html.parser')
+# info = soup.find_all("div", class_ ="lister-item-content")
 
 
 
